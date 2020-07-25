@@ -7,11 +7,12 @@ class MyPlane(pygame.sprite.Sprite):
 
         self.image = pygame.image.load("image/主角飞机.png").convert_alpha()
         self.width, self.height = bg_size[0], bg_size[1]
-        self.rect = pygame.Rect(self.width/2-15, self.height/1.3, 30, 30)
-
+        self.rect = self.image.get_rect()
+        self.rect.left, self.rect.bottom = self.width/2 - 18, self.height - 50
         self.speed = 10
         self.active = True
-        self.mask = pygame.mask.from_surface(self.image)
+        self.invincible = False
+        # self.mask = pygame.mask.from_surface(self.image)
 
     def moveup(self):
         if self.rect.top > 0:
@@ -20,10 +21,10 @@ class MyPlane(pygame.sprite.Sprite):
             self.rect.top = 0
 
     def movedown(self):
-        if self.rect.bottom < self.height:
+        if self.rect.bottom < self.height - 50:
             self.rect.bottom += self.speed
         else:
-            self.rect.bottom = self.height
+            self.rect.bottom = self.height - 50
 
     def moveleft(self):
         if self.rect.left > 0:
@@ -39,4 +40,5 @@ class MyPlane(pygame.sprite.Sprite):
 
     def reset(self):
         self.active = True
-        self.rect = pygame.Rect(self.width / 2 - 15, self.height / 1.3, 30, 30)
+        self.invincible = True
+        self.rect.left, self.rect.bottom = self.width / 2 - 18, self.height - 50
